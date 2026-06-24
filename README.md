@@ -38,3 +38,27 @@ The system architecture focuses on modular design, separation of concerns, and c
    ├── 1. Admin Menu ──> (Requires No Password) ──> Operates on entire Account Vector
    ├── 2. User Menu  ──> [Login Verification]   ──> Passes Specific Index by Reference
    └── 3. System Reports ─────────────────────────> Read-only Global Aggregations
+💻 Tech Stack
+Language: C++ (C++11 or higher)
+
+Paradigm: Procedural / Structural Programming
+
+Libraries: <iostream>, <vector>, <string>, <iomanip>
+
+🚀 How to Run the Project
+Clone the repository to your local machine:
+
+Bash
+   git clone [https://github.com/reham-shaaban/Bank-Management-System.git](https://github.com/reham-shaaban/Bank-Management-System.git)
+Navigate into the project directory:
+
+Bash
+   cd Bank-Management-System
+Compile the system using any standard C++ compiler (e.g., g++):
+
+Bash
+   g++ main.cpp -o BankSystem
+Execute the compiled application:
+
+Bash
+   ./BankSystem
