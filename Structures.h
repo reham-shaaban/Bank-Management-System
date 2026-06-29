@@ -1,7 +1,9 @@
-#pragma once
+
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cctype>
+#include <algorithm> 
 using namespace std;
 
 struct transaction
@@ -16,17 +18,17 @@ struct transaction
 struct bankAccount
 {
 	// هوية الحساب 
-	string accountNum;
-	string accountType;
+	long accountNum;//
+	string accountType;//
 	string creationDate; // لتسجيل متى قام العميل بفتح هذا الحساب في البنك لأول مرة 
 	bool isActive;
 	// بيانات العميل
-	string holderName;
-	string phoneNumber;
-	string pin;
+	string holderName; //
+	string phoneNumber;//
+	string pin;//
 	int  failedPinAttempts = 0;  // لو تعدت 3 مرات يتم تجميد الحساب
 	 // الرصيد
-	double balance;
+	double balance;//
 	double dailyLimit;  //  الحد الاقصي للمال اللى ممكن تستخدمه فى اليوم الواحد 
 	double dailyWithdrawn = 0.0;  // dailyLimit بيتحدث يوميا لمعرفة 
 	string lastWithdrawDate = "";
@@ -45,3 +47,6 @@ struct bankSummary
 	int total_Frozen_Accounts;
 	int totalAccounts;
 };
+
+int currentUser = 0;
+vector <bankAccount> accounts;
