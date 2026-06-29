@@ -18,19 +18,19 @@ struct transaction
 struct bankAccount
 {
 	// هوية الحساب 
-	long accountNum;//
-	string accountType;//
-	string creationDate; // لتسجيل متى قام العميل بفتح هذا الحساب في البنك لأول مرة 
+	long accountNum;
+	string accountType;
+	string creationDate; 
 	bool isActive;
 	// بيانات العميل
-	string holderName; //
-	string phoneNumber;//
-	string pin;//
-	int  failedPinAttempts = 0;  // لو تعدت 3 مرات يتم تجميد الحساب
+	string holderName; 
+	string phoneNumber;
+	string pin;
+	int  failedPinAttempts = 0;  
 	 // الرصيد
-	double balance;//
-	double dailyLimit;  //  الحد الاقصي للمال اللى ممكن تستخدمه فى اليوم الواحد 
-	double dailyWithdrawn = 0.0;  // dailyLimit بيتحدث يوميا لمعرفة 
+	double balance;
+	double dailyLimit;   
+	double dailyWithdrawn = 0.0; 
 	string lastWithdrawDate = "";
 	// السجل
 	vector < transaction > transactions;
@@ -46,7 +46,7 @@ struct bankSummary
 	long int total_Active_Transactions;
 	int total_Frozen_Accounts;
 	int totalAccounts;
-};
+} BankInfo;
 
 int currentUser = 0;
 vector <bankAccount> accounts;
