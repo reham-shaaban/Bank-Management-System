@@ -84,6 +84,10 @@ void creatAccount()
 	//نسخ معلومات الاكونت للفيكتور الاصلي 
 	accounts.push_back(clientInfo);
 	showAccountInfo(); 
+	BankInfo.totalAccounts++;
+	BankInfo.totalBalanceInBank += clientInfo.balance;
+	BankInfo.totalDeposited += clientInfo.balance;
+	BankInfo.total_Active_Account++;
 }
 
 
