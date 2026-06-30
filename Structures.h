@@ -6,6 +6,9 @@
 #include <algorithm> 
 using namespace std;
 
+const string adminName = "Admin";
+const string adminPass = "1234";
+
 struct transaction
 {
 	string transactionID;

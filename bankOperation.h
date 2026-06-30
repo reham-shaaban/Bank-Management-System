@@ -1,4 +1,4 @@
-
+#pragma once
 #include "Structures.h"
 
 string getValidInput(string prompt, string errorMessage, bool (*isValidName)(string& name))
@@ -89,5 +89,5 @@ void creatAccount()
 	BankInfo.totalDeposited += clientInfo.balance;
 	BankInfo.total_Active_Account++;
 }
-
+//===========================================================================
 
