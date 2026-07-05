@@ -1,5 +1,7 @@
 #pragma once
 #include "Structures.h"
+#include <chrono>
+#include <thread>
 
 char choice;
 char showWelcomeScreen()
@@ -48,7 +50,6 @@ void adminMenue()
 	cout << "5-View All Accounts\n| 6-Delete Account\n| 7-Show Bank Summary\n| 8-logout\n";
 	cout << "==================================\n";
 }
-
 bool clientLogin()
 {
 	long accountNum; 
@@ -63,7 +64,10 @@ bool clientLogin()
 		for (int i = 0; i < accounts.size(); i++)
 		{
 			if (accountNum == accounts.at(i).accountNum)
+			{
 				index = i;
+				break;
+			}
 		}
 		if (index != -1)
 		{
@@ -82,10 +86,13 @@ bool clientLogin()
 
 			else if (counter == 0)
 			{
-
-				cout << "Access Denied! 3 failed login attempts reached.\n";
+				cout << "Maximum attempts reached. Your account has been temporarily blocked.\n";
 				cout << "Redirecting to the Main Screen... Please wait.\n";
-
+				accounts.at(index).isActive = 0;
+				accounts.at(index).failedPinAttempts++;
+				BankInfo.total_Active_Account--;
+				BankInfo.total_Frozen_Accounts++;
+				this_thread::sleep_for(chrono::seconds(5));
 				return false;
 			}
 			counter--;
