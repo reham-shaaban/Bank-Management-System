@@ -1,6 +1,24 @@
 #pragma once
 #include "Structures.h"
 
+
+long promptForAccountNumber()
+{
+	long accountNum;
+	cout << "Please enter the account number you want to search for : ";
+	cin >> accountNum;
+	return accountNum;
+}
+int findAccountIndex(long accountNum)
+{
+	for (int i = 0; i < accounts.size(); i++)
+	{
+		if (accountNum == accounts.at(i).accountNum)
+			return i;
+	}
+	return -1;
+}
+
 string getValidInput(string prompt, string errorMessage, bool (*isValidName)(string& name))
 {
 	string input;
@@ -34,8 +52,6 @@ bool isValidPIN(string& PIN)
 	if (PIN.length() != 4)  return false;
 	return all_of(PIN.begin(), PIN.end(), [](char c) {return isdigit(c); });
 }
-
-
 void showAccountInfo()
 {
 	const int indexUser = accounts.size() - 1;
@@ -89,5 +105,79 @@ void creatAccount()
 	BankInfo.totalDeposited += clientInfo.balance;
 	BankInfo.total_Active_Account++;
 }
-//===========================================================================
+void frozeAccount()
+{
+	long accountNum = promptForAccountNumber();
+	int index = findAccountIndex(accountNum);
+	if (index == -1)
+		cout << "Account not found\n";
+	else
+	{
+		accounts.at(index).isActive = false;
+		cout << "Account frozen successfully\n";
+		BankInfo.total_Frozen_Accounts++;
+		BankInfo.total_Active_Account--;
+	}
+}
+void activateAccount()
+{
+	long accountNum = promptForAccountNumber();
+	int index = findAccountIndex(accountNum);
+	if (index == -1)
+		cout << "Account not found\n";
+	else
+	{
+		accounts.at(index).isActive = true;
+		cout << "Account activated successfully\n";
+		BankInfo.total_Active_Account++;
+		BankInfo.total_Frozen_Accounts--;
+	}
+}
+bool updateAccount()
+{
+	char choice;
+	double tempDailyLimit;
+	long accountNum = promptForAccountNumber();
+	int index = findAccountIndex(accountNum);
+	if (index == -1)
+	{
+		cout << "Account not found\n";
+		return false;
+	}
 
+	while (true)
+	{
+		cout << "choose from 1 to 5 : \n";
+		cout << "1-Update name\n2-Update phone number\n3-Update daily limit\n4-Update account type\n";
+		cout << "your choice : ";
+		cin >> choice;
+
+		switch (choice)
+		{
+		case '1':
+			accounts.at(index).holderName = getValidInput("new name : ", "INVALID username ", isValidName);
+			break;
+		case '2':
+			accounts.at(index).phoneNumber = getValidInput("new phone : ", "INVALID phone ", isValidPhone);
+			break;
+		case '3':
+			cout << "new daily limit (>= 500): "; cin >> tempDailyLimit;
+			if (tempDailyLimit < 500) cout << "Invalid limit\n";
+			else accounts.at(index).dailyLimit = tempDailyLimit;
+			break;
+		case '4':
+			accounts.at(index).accountType = getValidInput("new account type : ", "INVALID type ", isValidType);
+			break;
+		default:
+			cout << "Invalid choice\n";
+			break;
+		}
+		cout << "Do you want to make another change? (Y,any key)\n";
+		cin >> choice;
+		if (choice != 'y' && choice != 'Y')
+			break;
+	}
+
+	cout << "Account updated successfully !\n";
+	return true;
+}
