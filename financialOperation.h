@@ -5,9 +5,10 @@
 string currentDate()
 {
 	time_t t = time(0);
-	int year = localtime(&t)->tm_year + 1900;
-	int month = localtime(&t)->tm_mon + 1;
-	int day = localtime(&t)->tm_mday;
+	tm* timeInfo = localtime(&t);
+	int year = timeInfo->tm_year + 1900;
+	int month = timeInfo->tm_mon + 1;
+	int day = timeInfo->tm_mday;
 	 return to_string(day) + "/" + to_string(month) + "/" + to_string(year);
 }
 double money()
@@ -67,6 +68,6 @@ bool withdraw()
 	BankInfo.total_Active_Transactions++;
 
 	cout << "Withdrawal successful!\n";
-	cout << "Your new balance : " << currentAccount.balance;
+	cout << "Your new balance : " << currentAccount.balance << endl;
 	return true;
 }

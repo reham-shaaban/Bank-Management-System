@@ -11,7 +11,7 @@ const string adminPass = "1234";
 
 struct transaction
 {
-	long transactionID = 10000;
+	long transactionID;
 	string type;
 	double amount;
 	string receiverAccountNumber;
