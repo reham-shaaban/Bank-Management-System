@@ -1,4 +1,4 @@
-
+#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,7 +11,7 @@ const string adminPass = "1234";
 
 struct transaction
 {
-	string transactionID;
+	long transactionID = 10000;
 	string type;
 	double amount;
 	string receiverAccountNumber;
