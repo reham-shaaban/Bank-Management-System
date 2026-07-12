@@ -32,6 +32,13 @@ bool withdraw()
 	auto& currentAccount = accounts.at(index);
 	double amount = money();
 	string todayDate = currentDate();
+
+	if (amount <= 0)
+	{
+		cout << "Error !! You shoud enter positive amount\n";
+		return false;
+	}
+
 	//التاكد من صلاحية الحساب لسحب المبلغ
 	if (amount > currentAccount.balance)
 	{
@@ -70,4 +77,44 @@ bool withdraw()
 	cout << "Withdrawal successful!\n";
 	cout << "Your new balance : " << currentAccount.balance << endl;
 	return true;
+}
+bool deposit()
+{
+	cout << "\t--- Deposit Money ---\n ";
+	long accountNum = promptForAccountNumber();
+	int index = findAccountIndex(accountNum);
+	// التاكد ان الحساب موجود اولا 
+	if (index == -1)
+	{
+		cout << "Account not found !!\n";
+		return false;
+	}
+	// طلب ادخال المبلغ
+	auto& currentAccount = accounts.at(index);
+	double amount = money();
+	string todayDate = currentDate();
+
+	if (amount <= 0)
+	{
+		cout << "Error !! You shoud enter positive amount\n";
+		return false;
+	}
+
+	currentAccount.balance += amount;
+	// تحديث سجل اليوزر == نجاح العميلة
+	transaction transactionInfo;
+	transactionInfo.amount = amount;
+	transactionInfo.type = "Deposit";
+	transactionInfo.transactionID = accountNum * 1000 + currentAccount.transactions.size() + 1;
+	transactionInfo.timestamp = todayDate;
+	currentAccount.transactions.push_back(transactionInfo);
+	// تحديث بيانات البنك 
+	BankInfo.totalDeposited += amount;
+	BankInfo.totalBalanceInBank += amount;
+	BankInfo.total_Active_Transactions++;
+
+	cout << "Deposit successful!\n";
+	cout << "Your new balance : " << currentAccount.balance << endl;
+	return true;
+
 }
