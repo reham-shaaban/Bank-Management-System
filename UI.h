@@ -3,9 +3,9 @@
 #include <chrono>
 #include <thread>
 
-char choice;
 char showWelcomeScreen()
 {
+	char choice;
 	cout << "=======================================================\n";
 	cout << "||\t\tBANK MANAGEMENT SYSTEM \n||\t    Secure Core Banking Environment \n";
 	cout << "=======================================================\n";
@@ -23,7 +23,10 @@ bool adminLogin()
 		cout << "-> name : ";   getline (cin >> ws, name);
 		cout << "-> password : ";getline (cin >> ws, pass);
 		if (name == adminName && pass == adminPass)
+		{
+			cout << "Successful Login\n";
 			return true;
+		}
 		else
 		{
 			if (counter != 0)
@@ -41,18 +44,20 @@ bool adminLogin()
 		}
 	} while (true);
 }
-void adminMenue()
-{
+char adminMenue()
+{   
+	char choice;
 	cout << "==================================\n";
 	cout << "|    \tAdmin menue\t\t |\n";
 	cout << "==================================\n";
 	cout << "| 1-Create Account\n| 2-Freeze Account\n| 3-Update Account\n| 4-Search Account\n| ";
 	cout << "5-View All Accounts\n| 6-Delete Account\n| 7-Show Bank Summary\n| 8-logout\n";
 	cout << "==================================\n";
+	cin >> choice;
+	return choice;
 }
-bool clientLogin()
+int clientLogin(long& accountNum)
 {
-	long accountNum; 
 	string PIN;
 	int counter = 2;
 	int index = -1;
@@ -76,7 +81,7 @@ bool clientLogin()
 				cout << "--------------------------------------------\n";
 				cout << "\t\tsuccessful login\n";
 				cout << "--------------------------------------------\n";
-				return true;
+				return index;
 			}
 			else if (counter != 0)
 			{
@@ -93,25 +98,27 @@ bool clientLogin()
 				BankInfo.total_Active_Account--;
 				BankInfo.total_Frozen_Accounts++;
 				this_thread::sleep_for(chrono::seconds(5));
-				return false;
+				return -1;
 			}
 			counter--;
 		}
 		else
 		{
 			cout << "Error !! Account not found\n";
-			return false;
+			return -1;
 		}
 		
 	} while (true);
 }
-void clientMenue()
+char clientMenue()
 {
+	char choice;
 	cout << "==================================\n";
 	cout << "|    \tClient menue\t\t |\n";
 	cout << "==================================\n";
 	cout << "| 1-Withdraw Money\n| 2-Deposit Money\n| 3-Transfer Money\n| 4-Display Transaction History\n| ";
 	cout << "5-Check Balance\n| 6-logout\n";
 	cout << "==================================\n";
+	cin >> choice;
+	return choice;
 }
-
