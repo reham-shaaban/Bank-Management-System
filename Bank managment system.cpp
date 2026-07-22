@@ -31,6 +31,12 @@ int main()
 					break;
 				case '3':updateAccount();
 					break;
+				case '4':searchAccount();
+					break;
+				case '5':viewAllAccounts();
+					break;
+				case '6':deleteAccount();
+					break;
 				case '7':displayBankSummary(BankInfo);
 					break;
 				case '8': cout << "logging out ... \n";
@@ -51,8 +57,7 @@ int main()
 		//----------------------------------------------------------------------
 
 
-
-		return 0;
 	}
+	return 0;
 }
 

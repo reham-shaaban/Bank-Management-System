@@ -25,6 +25,7 @@ struct bankAccount
 	string accountType;
 	string creationDate; 
 	bool isActive;
+	bool isDeleted;
 	// بيانات العميل
 	string holderName; 
 	string phoneNumber;

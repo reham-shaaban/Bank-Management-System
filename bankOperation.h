@@ -1,11 +1,11 @@
 #pragma once
 #include "Structures.h"
-
+#include "AccountStatement.h"
 
 long promptForAccountNumber()
 {
 	long accountNum;
-	cout << "Please enter the account number you want to search for : ";
+	cout << "Please enter the account number : ";
 	cin >> accountNum;
 	return accountNum;
 }
@@ -180,4 +180,62 @@ bool updateAccount()
 
 	cout << "Account updated successfully !\n";
 	return true;
+}
+void searchAccount()
+{
+	cout << "\n----------------------------------------\n";
+	cout << "            SEARCH ACCOUNT              \n";
+	cout << "----------------------------------------\n";
+	long accountNum = promptForAccountNumber();
+    int index = findAccountIndex(accountNum);
+
+	if (index == -1)
+		cout << "Account not found\n";
+	else
+		showAccountDetails(index);
+}
+void viewAllAccounts()
+{
+	if (accounts.empty())
+		cout << "No accounts available in the system.\n";
+	else
+	{
+		cout << "name\t| accountnumber\t| balance \t| status\t\n";
+		for (bankAccount& account : accounts)
+		{
+			cout << account.holderName << "\t" << account.accountNum << "\t" << account.balance << "\t" << (account.isActive ? "Active" : "Frozen");
+			cout << "\n--------------------------------------------------------------\n";
+		}
+	}
+}
+void deleteAccount()
+{
+	long accountNum = promptForAccountNumber();
+	int index = findAccountIndex(accountNum);
+
+	if (index == -1)
+	{
+		cout << "\nAccount not found!\n";
+		return;
+	}
+	else if (accounts[index].isDeleted)
+	{
+		cout << "Account is already deleted.\n";
+		return;
+	}
+
+	char confirm;
+	cout << "Are you sure you want to delete account (" << accountNum << ")? (y/n): ";
+	cin >> confirm;
+
+    if (confirm == 'Y' || confirm == 'y')
+	{
+		accounts[index].isDeleted = true;
+		accounts[index].isActive = false; 
+		cout << "\nAccount has been marked as deleted.\n";
+	}
+	else
+	{
+		cout << "\nDeletion cancelled.\n";
+	}
 }
