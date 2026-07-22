@@ -3,6 +3,12 @@
 #include <chrono>
 #include <thread>
 
+void printHeader(string title)
+{
+	cout << "\n====================================================\n";
+	cout << "\t" << title ;
+	cout << "\n====================================================\n";
+}
 char showWelcomeScreen()
 {
 	char choice;
@@ -47,9 +53,7 @@ bool adminLogin()
 char adminMenue()
 {   
 	char choice;
-	cout << "==================================\n";
-	cout << "|    \tAdmin menue\t\t |\n";
-	cout << "==================================\n";
+	printHeader("ADMIN MINU");
 	cout << "| 1-Create Account\n| 2-Freeze Account\n| 3-Update Account\n| 4-Search Account\n| ";
 	cout << "5-View All Accounts\n| 6-Delete Account\n| 7-Show Bank Summary\n| 8-logout\n";
 	cout << "==================================\n";
@@ -113,9 +117,7 @@ int clientLogin(long& accountNum)
 char clientMenue()
 {
 	char choice;
-	cout << "==================================\n";
-	cout << "|    \tClient menue\t\t |\n";
-	cout << "==================================\n";
+	printHeader("CLIENT MENU");
 	cout << "| 1-Withdraw Money\n| 2-Deposit Money\n| 3-Transfer Money\n| 4-Display Transaction History\n| ";
 	cout << "5-Check Balance\n| 6-logout\n";
 	cout << "==================================\n";

@@ -18,7 +18,6 @@ int findAccountIndex(long accountNum)
 	}
 	return -1;
 }
-
 string getValidInput(string prompt, string errorMessage, bool (*isValidName)(string& name))
 {
 	string input;
@@ -31,7 +30,6 @@ string getValidInput(string prompt, string errorMessage, bool (*isValidName)(str
 		cout << errorMessage;
 	}
 }
-
 bool isValidName(string& name)
 {
 	if (name.length() < 4) return false;
@@ -52,27 +50,10 @@ bool isValidPIN(string& PIN)
 	if (PIN.length() != 4)  return false;
 	return all_of(PIN.begin(), PIN.end(), [](char c) {return isdigit(c); });
 }
-void showAccountInfo()
-{
-	const int indexUser = accounts.size() - 1;
-	cout << "\t=====================================================\n";
-	cout << "\t\t🎉 Account Created Successfully! 🎉\n";
-	cout << "\t=====================================================\n";
-	cout << "Note: Your bank account has been generated. Please make sure to save your account details for future logins.\n";
-	cout << "==========================================\n";
-	cout << "| Date : " << accounts.at(indexUser).creationDate << endl;
-	cout << "| Name : " << accounts.at(indexUser).holderName << endl;
-	cout << "| Account number : " << accounts.at(indexUser).accountNum << endl;
-	cout << "| Account type : " << accounts.at(indexUser).accountType << endl;
-	cout << "| Balance : " << accounts.at(indexUser).balance << endl;
-	cout << "| Daily limit : " << accounts.at(indexUser).dailyLimit << endl;
-	cout << "| PIN : " << accounts.at(indexUser).pin << endl;
-	cout << "===========================================\n";
-}
 void creatAccount()
-{
+{   
+	printHeader("CREATE NEW ACCOUNT");
 	bankAccount clientInfo;
-	
 	cout << "\t\t\tPlease provide the following details to proceed : \n\n";
 	
 	clientInfo.holderName = getValidInput("-> username : ", "INVALID username ", isValidName);
@@ -99,7 +80,14 @@ void creatAccount()
 	clientInfo.isActive = true;
 	//نسخ معلومات الاكونت للفيكتور الاصلي 
 	accounts.push_back(clientInfo);
-	showAccountInfo(); 
+
+	cout << "\t=====================================================\n";
+	cout << "\t\t🎉 Account Created Successfully! 🎉\n";
+	cout << "\t=====================================================\n";
+	cout << "Note: Your bank account has been generated. Please make sure to save your account details for future logins.\n";
+	cout << "==========================================\n";
+	showAccountDetails(accounts.size() - 1);
+	// تحديث معلومات البنك
 	BankInfo.totalAccounts++;
 	BankInfo.totalBalanceInBank += clientInfo.balance;
 	BankInfo.totalDeposited += clientInfo.balance;
@@ -107,6 +95,7 @@ void creatAccount()
 }
 void frozeAccount()
 {
+	printHeader("FROZE ACCOUNT");
 	long accountNum = promptForAccountNumber();
 	int index = findAccountIndex(accountNum);
 	if (index == -1)
@@ -121,6 +110,7 @@ void frozeAccount()
 }
 void activateAccount()
 {
+	printHeader("ACTIVATE ACCOUNT");
 	long accountNum = promptForAccountNumber();
 	int index = findAccountIndex(accountNum);
 	if (index == -1)
@@ -135,6 +125,7 @@ void activateAccount()
 }
 bool updateAccount()
 {
+	printHeader("UPDATE ACCOUNT");
 	char choice;
 	double tempDailyLimit;
 	long accountNum = promptForAccountNumber();
@@ -183,9 +174,7 @@ bool updateAccount()
 }
 void searchAccount()
 {
-	cout << "\n----------------------------------------\n";
-	cout << "            SEARCH ACCOUNT              \n";
-	cout << "----------------------------------------\n";
+	printHeader("SEARCH ACCOUNT");
 	long accountNum = promptForAccountNumber();
     int index = findAccountIndex(accountNum);
 
@@ -196,6 +185,7 @@ void searchAccount()
 }
 void viewAllAccounts()
 {
+	printHeader("ALL ACCOUNTS");
 	if (accounts.empty())
 		cout << "No accounts available in the system.\n";
 	else
@@ -210,6 +200,7 @@ void viewAllAccounts()
 }
 void deleteAccount()
 {
+	printHeader("DELET ACCOUNT");
 	long accountNum = promptForAccountNumber();
 	int index = findAccountIndex(accountNum);
 

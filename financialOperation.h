@@ -37,9 +37,9 @@ transaction updateTrans(long tID, double amount ,const string& tType,const strin
 	transactionInfo.type = tType;
 	return transactionInfo;
 }
-bool withdraw(int index , long accountNum)
+bool withdraw(int index ,const long& accountNum)
 {
-	cout << "\t--- Withdraw Money ---\n";
+	printHeader("WITHDRAW MONEY");
 	// طلب ادخال المبلغ
 	auto& currentAccount = accounts.at(index);
 	double amount = money();
@@ -79,9 +79,9 @@ bool withdraw(int index , long accountNum)
 	cout << "Your new balance : " << currentAccount.balance << endl;
 	return true;
 }
-bool deposit(int index , long accountNum)
+bool deposit(int index ,const long& accountNum)
 {
-	cout << "\t--- Deposit Money ---\n ";
+	printHeader("DEPOSIT MONEY");
 	bankAccount& currentAccount = accounts.at(index);
 	// طلب ادخال المبلغ
 	double amount = money();
@@ -102,9 +102,9 @@ bool deposit(int index , long accountNum)
 	cout << "Your new balance : " << currentAccount.balance << endl;
 	return true;
 }
-bool transfer(int index , long accountNum)
+bool transfer(int index ,const long& accountNum)
 {
-	cout << "\t--- Transfer Money ---\n";
+	printHeader("TRANSFER MONEY");
 	cout << "the receiver's details \n";
 	long accountNumForReciever = promptForAccountNumber();
 	if (accountNumForReciever == accountNum)

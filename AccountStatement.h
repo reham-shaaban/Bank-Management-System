@@ -1,8 +1,10 @@
 #pragma once
 #include "Structures.h"
+#include "UI.h"
 
 bool showTransactionHistory(int index , const long& accountNum)
 {
+	printHeader("Transaction History");
 	const auto& currentAccount = accounts.at(index);
 	if (currentAccount.transactions.empty())
 	{
@@ -21,16 +23,23 @@ bool showTransactionHistory(int index , const long& accountNum)
     }
 	return true;
 }
-
 void showAccountDetails(int index)
 {
+	printHeader("ACCOUNT DEATIALS");
 	const auto& currentAccount = accounts.at(index);
-	cout << "\tAccount details\n";
 	cout << "Name : " << currentAccount.holderName << endl;
 	cout << "Account number : " << currentAccount.accountNum << endl;
 	cout << "Account type : " << currentAccount.accountType << endl;
 	cout << "Balance : " << currentAccount.balance << endl;
 	cout << "Creation date : " << currentAccount.creationDate<< endl;
 	cout << "Phone number : " << currentAccount.phoneNumber << endl;
-	cout << "-----------------------------------\n";
+	cout << "PIN : " << currentAccount.pin << endl;
+	cout << "Daily limit : " << currentAccount.dailyLimit << endl;
+	cout << "Status : " << (currentAccount.isActive? "Active" : "Frozen") << endl;
+	cout << "\n-----------------------------------\n";
+} 
+void showBalance(int index)
+{
+	printHeader("Current Balance");
+	cout << "balance : " << accounts.at(index).balance << endl;
 }
