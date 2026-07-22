@@ -9,7 +9,7 @@ long promptForAccountNumber()
 	cin >> accountNum;
 	return accountNum;
 }
-int findAccountIndex(long accountNum)
+int findAccountIndex(const long& accountNum)
 {
 	for (int i = 0; i < accounts.size(); i++)
 	{
@@ -65,27 +65,24 @@ void creatAccount()
 	do 
 	{
 		cout << "-> Balance : "; cin >> clientInfo.balance;
-		if (clientInfo.balance < 500)  cout << "Insufficient balance!\n";
+		if (clientInfo.balance < 500)  cout << "Unsufficient balance!\n";
 	} while (clientInfo.balance < 500);
 	clientInfo.pin = getValidInput("-> PIN : ", "INVALID PIN", isValidPIN);
 	if (accounts.size() == 0)
 		clientInfo.accountNum = rand() % 9000 + 1000;
 	else
 		clientInfo.accountNum = accounts.back().accountNum + 1;
-	time_t t = time(0);
-	int year = localtime(&t)->tm_year + 1900;
-	int month = localtime(&t)->tm_mon + 1;
-	int day = localtime(&t)->tm_mday;
-	clientInfo.creationDate = to_string(day) + "/" + to_string(month) + "/" + to_string(year);
+
+	clientInfo.creationDate = currentDate();
 	clientInfo.isActive = true;
 	//نسخ معلومات الاكونت للفيكتور الاصلي 
 	accounts.push_back(clientInfo);
 
-	cout << "\t=====================================================\n";
+	cout << "\t==================================================\n";
 	cout << "\t\t🎉 Account Created Successfully! 🎉\n";
-	cout << "\t=====================================================\n";
+	cout << "\t==================================================\n";
 	cout << "Note: Your bank account has been generated. Please make sure to save your account details for future logins.\n";
-	cout << "==========================================\n";
+	cout << "----------------------------------------------\n";
 	showAccountDetails(accounts.size() - 1);
 	// تحديث معلومات البنك
 	BankInfo.totalAccounts++;
@@ -96,14 +93,13 @@ void creatAccount()
 void frozeAccount()
 {
 	printHeader("FROZE ACCOUNT");
-	long accountNum = promptForAccountNumber();
-	int index = findAccountIndex(accountNum);
+	int index = findAccountIndex(promptForAccountNumber());
 	if (index == -1)
 		cout << "Account not found\n";
 	else
 	{
 		accounts.at(index).isActive = false;
-		cout << "Account frozen successfully\n";
+		cout << "| Account frozen successfully\n";
 		BankInfo.total_Frozen_Accounts++;
 		BankInfo.total_Active_Account--;
 	}
@@ -111,8 +107,7 @@ void frozeAccount()
 void activateAccount()
 {
 	printHeader("ACTIVATE ACCOUNT");
-	long accountNum = promptForAccountNumber();
-	int index = findAccountIndex(accountNum);
+	int index = findAccountIndex(promptForAccountNumber());
 	if (index == -1)
 		cout << "Account not found\n";
 	else
@@ -128,17 +123,16 @@ bool updateAccount()
 	printHeader("UPDATE ACCOUNT");
 	char choice;
 	double tempDailyLimit;
-	long accountNum = promptForAccountNumber();
-	int index = findAccountIndex(accountNum);
+	int index = findAccountIndex(promptForAccountNumber());
 	if (index == -1)
 	{
 		cout << "Account not found\n";
 		return false;
 	}
 
-	while (true)
+	do
 	{
-		cout << "choose from 1 to 5 : \n";
+		cout << "Choose from 1 to 4 : \n";
 		cout << "1-Update name\n2-Update phone number\n3-Update daily limit\n4-Update account type\n";
 		cout << "your choice : ";
 		cin >> choice;
@@ -163,11 +157,9 @@ bool updateAccount()
 			cout << "Invalid choice\n";
 			break;
 		}
-		cout << "Do you want to make another change? (Y,any key)\n";
+		cout << "Do you want to make another update? (Y,any key)\n";
 		cin >> choice;
-		if (choice != 'y' && choice != 'Y')
-			break;
-	}
+	} while (choice == 'y' || choice == 'Y');
 
 	cout << "Account updated successfully !\n";
 	return true;
@@ -175,8 +167,7 @@ bool updateAccount()
 void searchAccount()
 {
 	printHeader("SEARCH ACCOUNT");
-	long accountNum = promptForAccountNumber();
-    int index = findAccountIndex(accountNum);
+    int index = findAccountIndex(promptForAccountNumber());
 
 	if (index == -1)
 		cout << "Account not found\n";
@@ -190,43 +181,38 @@ void viewAllAccounts()
 		cout << "No accounts available in the system.\n";
 	else
 	{
-		cout << "name\t| accountnumber\t| balance \t| status\t\n";
-		for (bankAccount& account : accounts)
+		cout << "name  | accountnumber  | balance  | status\n";
+		for (const bankAccount& account : accounts)
 		{
 			cout << account.holderName << "\t" << account.accountNum << "\t" << account.balance << "\t" << (account.isActive ? "Active" : "Frozen");
-			cout << "\n--------------------------------------------------------------\n";
+			cout << "\n-----------------------------------------\n";
 		}
 	}
 }
 void deleteAccount()
 {
-	printHeader("DELET ACCOUNT");
-	long accountNum = promptForAccountNumber();
-	int index = findAccountIndex(accountNum);
-
+	printHeader("DELETE ACCOUNT");
+	int index = findAccountIndex(promptForAccountNumber());
 	if (index == -1)
-	{
 		cout << "\nAccount not found!\n";
-		return;
-	}
-	else if (accounts[index].isDeleted)
-	{
+	else if (accounts.at(index).isDeleted)
 		cout << "Account is already deleted.\n";
-		return;
-	}
-
-	char confirm;
-	cout << "Are you sure you want to delete account (" << accountNum << ")? (y/n): ";
-	cin >> confirm;
-
-    if (confirm == 'Y' || confirm == 'y')
-	{
-		accounts[index].isDeleted = true;
-		accounts[index].isActive = false; 
-		cout << "\nAccount has been marked as deleted.\n";
-	}
 	else
 	{
-		cout << "\nDeletion cancelled.\n";
+		char confirm;
+		cout << "Are you sure you want to delete account (" << accounts.at(index).accountNum << ")? (y/n): ";
+		cin >> confirm;
+
+		if (confirm == 'Y' || confirm == 'y')
+		{
+			accounts.at(index).isDeleted = true;
+			accounts.at(index).isActive = false;
+			cout << "\nAccount has been marked as deleted.\n";
+			//تحديث سجل البنك 
+			BankInfo.total_Active_Account--;
+			BankInfo.total_Frozen_Accounts++;
+		}
+		else
+			cout << "\nDeletion cancelled.\n";
 	}
 }
