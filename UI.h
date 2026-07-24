@@ -1,5 +1,5 @@
 #pragma once
-#include "Structures.h"
+#include "Declarations.h"
 #include <chrono>
 #include <thread>
 
@@ -82,10 +82,18 @@ int clientLogin(long& accountNum)
 		{
 			if (PIN == accounts.at(index).pin)
 			{
-				cout << "--------------------------------------------\n";
-				cout << "\t\tsuccessful login\n";
-				cout << "--------------------------------------------\n";
-				return index;
+				if (isAccountFrozen(index))
+				{
+					cout << "\t\tAccount is frozen. \nNo transactions can be performed until it is activated\n";
+					return -1;
+				}
+				else
+				{
+					cout << "--------------------------------------------\n";
+					cout << "\t\tsuccessful login\n";
+					cout << "--------------------------------------------\n";
+					return index;
+				}
 			}
 			else if (counter != 0)
 			{
@@ -124,3 +132,4 @@ char clientMenue()
 	cin >> choice;
 	return choice;
 }
+

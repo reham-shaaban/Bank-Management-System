@@ -1,7 +1,19 @@
 #pragma once
-#include "Structures.h"
-#include "AccountStatement.h"
+#include "Declarations.h"
 
+string currentDate()
+{
+	time_t t = time(0);
+	tm* timeInfo = localtime(&t);
+	int year = timeInfo->tm_year + 1900;
+	int month = timeInfo->tm_mon + 1;
+	int day = timeInfo->tm_mday;
+	return to_string(day) + "/" + to_string(month) + "/" + to_string(year);
+}
+bool isAccountFrozen(int index)
+{
+	return !accounts.at(index).isActive;
+}
 long promptForAccountNumber()
 {
 	long accountNum;

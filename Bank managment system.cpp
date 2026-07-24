@@ -52,11 +52,7 @@ int main()
 			}
 			break;
 		case '2':index = clientLogin(accountNum);
-			if (index == -1) 
-			{
-				cout << "Account not found.\n";
-				break;
-			}
+			if (index == -1)   break;
 			successCL = true;
 			keyAnswer = 'Y';
 			while ((keyAnswer == 'Y' || keyAnswer == 'y') && successCL)

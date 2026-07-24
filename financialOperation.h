@@ -1,19 +1,9 @@
 #pragma once
-#include "Structures.h"
-#include "bankOperation.h"
+#include "Declarations.h"
 
 long generateTransactionID(long accountNum ,const bankAccount& currentAccount)
 {
 	return accountNum * 100 + currentAccount.transactions.size() + 1;
-}
-string currentDate()
-{
-	time_t t = time(0);
-	tm* timeInfo = localtime(&t);
-	int year = timeInfo->tm_year + 1900;
-	int month = timeInfo->tm_mon + 1;
-	int day = timeInfo->tm_mday;
-	 return to_string(day) + "/" + to_string(month) + "/" + to_string(year);
 }
 double money()
 {

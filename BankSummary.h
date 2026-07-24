@@ -1,5 +1,5 @@
 #pragma once
-#include "Structures.h"
+#include "Declarations.h"
 
 void displayBankSummary(const bankSummary& bankInfo)
 {

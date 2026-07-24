@@ -1,6 +1,5 @@
 #pragma once
-#include "Structures.h"
-#include "UI.h"
+#include "Declarations.h"
 
 bool showTransactionHistory(int index , const long& accountNum)
 {
