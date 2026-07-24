@@ -33,11 +33,9 @@ int main()
 					break;
 				case '5':viewAllAccounts();
 					break;
-				case '6':deleteAccount();
+				case '6':displayBankSummary(BankInfo);
 					break;
-				case '7':displayBankSummary(BankInfo);
-					break;
-				case '8': cout << "\nlogging out ... \n\n";
+				case '7': cout << "\nlogging out ... \n\n";
 					this_thread::sleep_for(chrono::seconds(3));
 					successAL = false;
 					break;

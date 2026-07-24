@@ -28,12 +28,11 @@ struct bankAccount
 	string accountType;
 	string creationDate; 
 	bool isActive;
-	bool isDeleted;
 	// بيانات العميل
 	string holderName; 
 	string phoneNumber;
 	string pin;
-	int  failedPinAttempts = 0;  
+	int failedPinAttempts;
 	 // الرصيد
 	double balance;
 	double dailyLimit;   

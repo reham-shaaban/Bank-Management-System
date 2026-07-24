@@ -54,7 +54,7 @@ char adminMenue()
 	char choice;
 	printHeader("ADMIN MINU");
 	cout << "| 1-Create Account\n| 2-Freeze Account\n| 3-Update Account\n| 4-Search Account\n| ";
-	cout << "5-View All Accounts\n| 6-Delete Account\n| 7-Show Bank Summary\n| 8-logout\n";
+	cout << "5-View All Accounts\n| | 6-Show Bank Summary\n| 7-logout\n";
 	cout << "==================================\n";
 	cin >> choice;
 	return choice;

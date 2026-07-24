@@ -201,30 +201,3 @@ void viewAllAccounts()
 		}
 	}
 }
-void deleteAccount()
-{
-	printHeader("DELETE ACCOUNT");
-	int index = findAccountIndex(promptForAccountNumber());
-	if (index == -1)
-		cout << "\nAccount not found!\n";
-	else if (accounts.at(index).isDeleted)
-		cout << "Account is already deleted.\n";
-	else
-	{
-		char confirm;
-		cout << "Are you sure you want to delete account (" << accounts.at(index).accountNum << ")? (y/n): ";
-		cin >> confirm;
-
-		if (confirm == 'Y' || confirm == 'y')
-		{
-			accounts.at(index).isDeleted = true;
-			accounts.at(index).isActive = false;
-			cout << "\nAccount has been marked as deleted.\n";
-			//تحديث سجل البنك 
-			BankInfo.total_Active_Account--;
-			BankInfo.total_Frozen_Accounts++;
-		}
-		else
-			cout << "\nDeletion cancelled.\n";
-	}
-}
