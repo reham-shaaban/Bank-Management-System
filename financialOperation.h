@@ -109,6 +109,11 @@ bool transfer(int index ,const long& accountNum)
 		cout << "Account not found !!\n";
 		return false;
 	}
+	if (isAccountFrozen(indexReciever))
+	{
+		cout << "\t\tAccount is frozen. \nNo transactions can be performed until it is activated\n";
+		return false;
+	}
 	// طلب ادخال المبلغ
 	auto& senderAccount = accounts.at(index);
 	auto& RecieverAccount = accounts.at(indexReciever);

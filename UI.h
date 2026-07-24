@@ -1,7 +1,5 @@
 #pragma once
 #include "Declarations.h"
-#include <chrono>
-#include <thread>
 
 void printHeader(string title)
 {
@@ -44,6 +42,7 @@ bool adminLogin()
 			{
 				cout << "Access Denied! 3 failed login attempts reached.\n";
 				cout << "Redirecting to the Main Screen... Please wait.\n";
+				this_thread::sleep_for(chrono::seconds(3));
 				return false;
 			}
 			counter--;

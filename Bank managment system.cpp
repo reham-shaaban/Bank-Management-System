@@ -1,10 +1,6 @@
 // Bank managment system.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-#include "bankOperation.h"
-#include "UI.h"
-#include "financialOperation.h"
-#include "BankSummary.h"
-#include "AccountStatement.h"
+#include "Declarations.h"
 
 int main()
 {
@@ -41,14 +37,15 @@ int main()
 					break;
 				case '7':displayBankSummary(BankInfo);
 					break;
-				case '8': cout << "logging out ... \n";
+				case '8': cout << "\nlogging out ... \n\n";
+					this_thread::sleep_for(chrono::seconds(3));
 					successAL = false;
 					break;
 				default:cout << "Invalid choice !!! \n";
 					break;
 				}
 				if (op == '8') break;
-				cout << "Do you want to perform another operation? (y/any key):  "; cin >> again;
+				cout << "\nDo you want to perform another operation? (y/any key):  "; cin >> again;
 			}
 			break;
 		case '2':index = clientLogin(accountNum);

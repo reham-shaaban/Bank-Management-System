@@ -4,6 +4,8 @@
 #include <vector>
 #include <cctype>
 #include <algorithm> 
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
