@@ -1,6 +1,17 @@
 #pragma once
 #include "Declarations.h"
 
+template <typename T>
+void ValidInput(T& variable, string nameVariable, string errorMessage)
+{
+	while (cin.fail())
+	{
+		cout << errorMessage << endl;
+		cin.clear();
+		cin.ignore(10000, '\n');
+		cout << nameVariable ; cin >> variable;
+	}
+}
 string currentDate()
 {
 	time_t t = time(0);
@@ -19,6 +30,7 @@ long promptForAccountNumber()
 	long accountNum;
 	cout << "Please enter the account number : ";
 	cin >> accountNum;
+	ValidInput(accountNum, "\naccount Num : ", "\nInvalid input type");
 	return accountNum;
 }
 int findAccountIndex(const long& accountNum)
@@ -77,9 +89,10 @@ void creatAccount()
 	do 
 	{
 		cout << "-> Balance : "; cin >> clientInfo.balance;
+		ValidInput(clientInfo.balance, "-> Balance : ", "Invalid input type!");
 		if (clientInfo.balance < 500)  cout << "Unsufficient balance!\n";
 	} while (clientInfo.balance < 500);
-	clientInfo.pin = getValidInput("-> PIN : ", "INVALID PIN", isValidPIN);
+	clientInfo.pin = getValidInput("-> PIN : ", "INVALID PIN\n", isValidPIN);
 	if (accounts.size() == 0)
 		clientInfo.accountNum = rand() % 9000 + 1000;
 	else
@@ -107,13 +120,17 @@ void frozeAccount()
 	printHeader("FROZE ACCOUNT");
 	int index = findAccountIndex(promptForAccountNumber());
 	if (index == -1)
-		cout << "Account not found\n";
+		cout << "\nAccount not found\n";
 	else
 	{
-		accounts.at(index).isActive = false;
-		cout << "| Account frozen successfully\n";
-		BankInfo.total_Frozen_Accounts++;
-		BankInfo.total_Active_Account--;
+		if (isAccountFrozen(index)) cout << "\nAccount already frozen\n";
+		else
+		{
+			accounts.at(index).isActive = false;
+			cout << "| Account frozen successfully\n";
+			BankInfo.total_Frozen_Accounts++;
+			BankInfo.total_Active_Account--;
+		}
 	}
 }
 void activateAccount()
@@ -124,10 +141,14 @@ void activateAccount()
 		cout << "Account not found\n";
 	else
 	{
-		accounts.at(index).isActive = true;
-		cout << "Account activated successfully\n";
-		BankInfo.total_Active_Account++;
-		BankInfo.total_Frozen_Accounts--;
+		if (!isAccountFrozen(index)) cout << "\nAccount already activate\n";
+		else
+		{
+			accounts.at(index).isActive = true;
+			cout << "Account activated successfully\n";
+			BankInfo.total_Active_Account++;
+			BankInfo.total_Frozen_Accounts--;
+		}
 	}
 }
 bool updateAccount()
@@ -152,13 +173,14 @@ bool updateAccount()
 		switch (choice)
 		{
 		case '1':
-			accounts.at(index).holderName = getValidInput("new name : ", "INVALID username ", isValidName);
+			accounts.at(index).holderName = getValidInput("new name : ", "INVALID username \n", isValidName);
 			break;
 		case '2':
-			accounts.at(index).phoneNumber = getValidInput("new phone : ", "INVALID phone ", isValidPhone);
+			accounts.at(index).phoneNumber = getValidInput("new phone : ", "INVALID phone \n", isValidPhone);
 			break;
 		case '3':
 			cout << "new daily limit (>= 500): "; cin >> tempDailyLimit;
+			ValidInput(tempDailyLimit, "new daily limit (>= 500): ", "\nInvalid input type\n");
 			if (tempDailyLimit < 500) cout << "Invalid limit\n";
 			else accounts.at(index).dailyLimit = tempDailyLimit;
 			break;

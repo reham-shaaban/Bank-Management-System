@@ -1,6 +1,8 @@
 #pragma once
 #include "Structures.h"
 
+template <typename T>
+void ValidInput(T& variable, string nameVariable, string errorMessage);
 void printHeader(string title);
 char showWelcomeScreen();
 bool adminLogin();
@@ -32,4 +34,3 @@ void activateAccount();
 bool updateAccount();
 void searchAccount();
 void viewAllAccounts();
-void deleteAccount();

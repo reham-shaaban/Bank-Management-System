@@ -32,7 +32,7 @@ struct bankAccount
 	string holderName; 
 	string phoneNumber;
 	string pin;
-	int failedPinAttempts;
+	int failedPinAttempts = 0;
 	 // الرصيد
 	double balance;
 	double dailyLimit;   

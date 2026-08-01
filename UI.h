@@ -28,7 +28,7 @@ bool adminLogin()
 		cout << "-> password : ";getline (cin >> ws, pass);
 		if (name == adminName && pass == adminPass)
 		{
-			cout << "Successful Login\n";
+			cout << "\n-------------------------------------\n\tSuccessful Login\n-------------------------------------\n";
 			return true;
 		}
 		else
@@ -53,8 +53,8 @@ char adminMenue()
 {   
 	char choice;
 	printHeader("ADMIN MINU");
-	cout << "| 1-Create Account\n| 2-Freeze Account\n| 3-Update Account\n| 4-Search Account\n| ";
-	cout << "5-View All Accounts\n| | 6-Show Bank Summary\n| 7-logout\n";
+	cout << "| 1-Create Account\n| 2-Freeze Account\n| 3-Activate account\n| 4-Update Account\n| 5-Search Account\n| ";
+	cout << "6-View All Accounts\n| 7-Show Bank Summary\n| 8-logout\n";
 	cout << "==================================\n";
 	cin >> choice;
 	return choice;
